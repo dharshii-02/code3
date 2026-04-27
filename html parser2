@@ -1,0 +1,18 @@
+import re
+
+# N is the number of CSS lines
+n = int(input())
+
+# Regex breakdown:
+# (?<!^)        : Negative lookbehind - ensures '#' is NOT at the start of a line
+# #             : Literal '#' character
+# ([0-9a-fA-F]{3}|[0-9a-fA-F]{6}) : Matches exactly 3 or 6 hex digits
+# (?![0-9a-fA-F]) : Negative lookahead - ensures no more hex digits follow (prevents partial matches)
+pattern = r'(?<!^)#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])'
+
+for _ in range(n):
+    line = input()
+    matches = re.findall(pattern, line)
+    if matches:
+        for hex_code in matches:
+            print(f"#{hex_code}")
