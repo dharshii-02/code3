@@ -1,0 +1,23 @@
+import re
+import email.utils
+
+# N is the number of email pairs
+n = int(input())
+
+# Regex breakdown:
+# [a-zA-Z]       : Starts with an English alphabet
+# [a-zA-Z0-9-._]*: Followed by alphanumeric, hyphen, dot, or underscore
+# @              : The literal '@' symbol
+# [a-zA-Z]+      : Domain name (alphabets only)
+# \.             : The literal '.' symbol
+# [a-zA-Z]{1,3}$ : Extension (alphabets only, length 1-3)
+pattern = r'^[a-zA-Z][a-zA-Z0-9-._]*@[a-zA-Z]+\.[a-zA-Z]{1,3}$'
+
+for _ in range(n):
+    raw_input = input()
+    # parseaddr returns a tuple: (name, email)
+    name, addr = email.utils.parseaddr(raw_input)
+    
+    # Check if the extracted address matches our regex
+    if re.match(pattern, addr):
+        print(email.utils.formataddr((name, addr)))
